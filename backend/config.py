@@ -1,22 +1,34 @@
 import os
 from datetime import timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    SECRET_KEY = os.getenv("SECRET_KEY", "sdra-cybersec-secret-2024-xK9mP")
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "sdra-jwt-secret-2024-zL8nQ")
+    SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-change-me")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-jwt-secret-change-me")
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=8)
 
-    # Neon PostgreSQL
+    # Database: prefer DATABASE_URL, fallback to local sqlite for quick dev startup
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL",
-        "postgresql://neondb_owner:npg_eqM9SXv4TQyd@ep-round-dream-a-ngur44i.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require"
+        f"sqlite:///{os.path.join(BASE_DIR, 'sdra_dev.db')}",
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_pre_ping": True,
         "pool_recycle": 300,
-        "connect_args": {"sslmode": "require"},
     }
+
+    # SSL options for hosted Postgres providers (for example Neon)
+    if SQLALCHEMY_DATABASE_URI.startswith("postgresql"):
+        sslmode = os.getenv("DB_SSLMODE")
+        if sslmode:
+            SQLALCHEMY_ENGINE_OPTIONS["connect_args"] = {"sslmode": sslmode}
+        elif "neon.tech" in SQLALCHEMY_DATABASE_URI or "sslmode=require" in SQLALCHEMY_DATABASE_URI:
+            SQLALCHEMY_ENGINE_OPTIONS["connect_args"] = {"sslmode": "require"}
 
     # Socket.IO
     SOCKETIO_ASYNC_MODE = "eventlet"
