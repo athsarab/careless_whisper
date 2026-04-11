@@ -7,7 +7,7 @@ export function useSocket() {
 
   useEffect(() => {
     socketRef.current = io('/', {
-      transports: ['websocket'],
+      transports: ['websocket', 'polling'],
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
     })

@@ -24,7 +24,7 @@ export default function RTTAnalysis() {
       setRttSeries(r.data.series.map(s => s.rtt).filter(Boolean))
     })
 
-    const socket = io('/', { transports: ['websocket'] })
+    const socket = io('/', { transports: ['websocket', 'polling'] })
     socket.on('receipt:captured', d => {
       setRttSeries(prev => [...prev.slice(-49), d.rtt_ms])
     })

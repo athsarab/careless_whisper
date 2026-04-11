@@ -32,7 +32,7 @@ export default function ReceiptCollector() {
 
   useEffect(() => {
     load()
-    const socket = io('/', { transports: ['websocket'] })
+    const socket = io('/', { transports: ['websocket', 'polling'] })
     socket.on('receipt:captured', (r) => {
       setReceipts(prev => [r, ...prev.slice(0, 19)])
       setLiveCount(c => c + 1)

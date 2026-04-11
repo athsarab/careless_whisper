@@ -23,7 +23,7 @@ export default function ProbeSender() {
     loadDevices()
     loadProbes()
     loadStats()
-    const socket = io('/', { transports: ['websocket'] })
+    const socket = io('/', { transports: ['websocket', 'polling'] })
     socket.on('probe:sent', (probe) => {
       setProbes(prev => [probe, ...prev.slice(0, 19)])
       setStats(prev => ({ ...prev, total: prev.total + 1, pending: prev.pending + 1 }))

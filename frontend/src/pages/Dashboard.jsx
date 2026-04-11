@@ -62,7 +62,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchData()
-    const socket = io('/', { transports: ['websocket'] })
+    const socket = io('/', { transports: ['websocket', 'polling'] })
     socket.on('receipt:captured', (data) => {
       setRttSeries(prev => [...prev.slice(-49), data.rtt_ms])
       setSummary(prev => ({ ...prev, total_receipts: prev.total_receipts + 1 }))
