@@ -28,15 +28,26 @@ function RequireAuth({ children }) {
 
 function AppLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const { connected } = useSocket()
   const location = useLocation()
   const meta = PAGE_META[location.pathname] || { title: 'SDRA', subtitle: '' }
 
   return (
     <div className="flex h-screen overflow-hidden relative z-10">
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Sidebar
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
+      />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <TopBar title={meta.title} subtitle={meta.subtitle} socketConnected={connected} />
+        <TopBar
+          title={meta.title}
+          subtitle={meta.subtitle}
+          socketConnected={connected}
+          onMenuClick={() => setMobileOpen((v) => !v)}
+        />
         <main className="flex-1 flex flex-col overflow-hidden">
           {children}
         </main>

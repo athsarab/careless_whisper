@@ -105,14 +105,14 @@ export default function Dashboard() {
   )
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 space-y-6 page-enter">
+    <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6 page-enter">
       {/* Header row */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h2 className="text-lg font-semibold text-cyber-text">Research Dashboard</h2>
           <p className="text-xs text-cyber-muted font-mono">Real-time metadata analysis · Academic use only</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <button onClick={fetchData} className="btn-cyber py-1.5 px-3 flex items-center gap-1.5 text-xs">
             <RefreshCw size={12} /> REFRESH
           </button>
@@ -125,7 +125,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         <StatCard icon={Radio}    label="Total Probes"   value={summary.total_probes}   sub="Sent this session" color="cyan"   glow />
         <StatCard icon={Inbox}    label="Receipts"       value={summary.total_receipts} sub="Acknowledgments"   color="green"  />
         <StatCard icon={Cpu}      label="Devices"        value={devices.length}         sub="Authorized"        color="purple" />
@@ -135,8 +135,8 @@ export default function Dashboard() {
       {/* Main charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* RTT Graph */}
-        <div className="lg:col-span-2 glass-card p-5">
-          <div className="flex items-center justify-between mb-4">
+        <div className="lg:col-span-2 glass-card p-4 md:p-5">
+          <div className="flex items-center justify-between gap-3 mb-4">
             <div>
               <h3 className="text-sm font-semibold text-cyber-text flex items-center gap-2">
                 <TrendingUp size={14} className="text-cyber-accent" />
@@ -155,7 +155,7 @@ export default function Dashboard() {
 
         {/* Status + Devices */}
         <div className="space-y-4">
-          <div className="glass-card p-5">
+          <div className="glass-card p-4 md:p-5">
             <h3 className="text-sm font-semibold text-cyber-text mb-4">Status Prediction</h3>
             {analysis ? (
               <OnlineStatusChart online={analysis.online_probability} screenActive={analysis.screen_active_prob} />
@@ -163,7 +163,7 @@ export default function Dashboard() {
               <p className="text-xs text-cyber-muted font-mono text-center py-8">Select a device to analyze</p>
             )}
           </div>
-          <div className="glass-card p-5">
+          <div className="glass-card p-4 md:p-5">
             <h3 className="text-sm font-semibold text-cyber-text mb-4">Linked Devices</h3>
             <DeviceCountGauge count={analysis?.linked_device_count || 1} />
           </div>
@@ -173,7 +173,7 @@ export default function Dashboard() {
       {/* Device list + Recent analyses */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Device selector */}
-        <div className="glass-card p-5">
+        <div className="glass-card p-4 md:p-5">
           <h3 className="text-sm font-semibold text-cyber-text mb-4">Test Devices</h3>
           <div className="space-y-2">
             {devices.length === 0 && (
@@ -200,7 +200,7 @@ export default function Dashboard() {
         </div>
 
         {/* Latest analyses */}
-        <div className="glass-card p-5">
+        <div className="glass-card p-4 md:p-5">
           <h3 className="text-sm font-semibold text-cyber-text mb-4">Recent Analyses</h3>
           <div className="space-y-2">
             {summary.latest_analyses.slice(0, 5).map(ar => (

@@ -62,17 +62,17 @@ export default function RTTAnalysis() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 space-y-6 page-enter">
-      <div className="flex items-center justify-between">
+    <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6 page-enter">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
         <div>
           <h2 className="text-lg font-semibold text-cyber-text">RTT Analysis Engine</h2>
           <p className="text-xs text-cyber-muted font-mono">Pattern detection · Device estimation · State inference</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
           {/* Device picker */}
           <div className="relative">
             <select
-              className="cyber-input pr-8 appearance-none text-sm"
+            className="cyber-input pr-8 appearance-none text-sm min-w-[220px]"
               value={selectedDevice?.id || ''}
               onChange={e => setSelectedDevice(devices.find(d => d.id === e.target.value))}
             >
@@ -92,7 +92,7 @@ export default function RTTAnalysis() {
 
       {/* Charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2 glass-card p-5">
+        <div className="lg:col-span-2 glass-card p-4 md:p-5">
           <div className="flex items-center gap-2 mb-4">
             <BarChart3 size={14} className="text-cyber-accent" />
             <h3 className="text-sm font-semibold text-cyber-text">RTT Time Series</h3>
@@ -105,7 +105,7 @@ export default function RTTAnalysis() {
           <RTTGraph series={rttSeries} maxPoints={60} />
         </div>
 
-        <div className="glass-card p-5 flex flex-col gap-6 justify-center">
+        <div className="glass-card p-4 md:p-5 flex flex-col gap-6 justify-center">
           {analysis ? (
             <>
               <OnlineStatusChart online={analysis.online_probability} screenActive={analysis.screen_active_prob} />
@@ -123,7 +123,7 @@ export default function RTTAnalysis() {
 
       {/* Analysis details */}
       {analysis && (
-        <div className="glass-card p-5">
+        <div className="glass-card p-4 md:p-5">
           <h3 className="text-sm font-semibold text-cyber-text mb-4">Analysis Results</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
             {[
@@ -148,24 +148,26 @@ export default function RTTAnalysis() {
 
       {/* History */}
       {history.length > 0 && (
-        <div className="glass-card p-5">
+        <div className="glass-card p-4 md:p-5">
           <h3 className="text-sm font-semibold text-cyber-text mb-4">Analysis History</h3>
-          <table className="cyber-table">
-            <thead>
-              <tr><th>Analyzed At</th><th>Online %</th><th>Screen %</th><th>Avg RTT</th><th>Linked</th></tr>
-            </thead>
-            <tbody>
-              {history.map(h => (
-                <tr key={h.id}>
-                  <td className="text-cyber-muted">{new Date(h.analyzed_at).toLocaleString()}</td>
-                  <td className="text-cyber-green">{(h.online_probability * 100).toFixed(1)}%</td>
-                  <td className="text-cyber-purple">{(h.screen_active_prob * 100).toFixed(1)}%</td>
-                  <td className="text-cyber-accent">{h.avg_rtt_ms?.toFixed(1)}ms</td>
-                  <td className="text-cyber-text">{h.linked_device_count}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto">
+            <table className="cyber-table min-w-[680px]">
+              <thead>
+                <tr><th>Analyzed At</th><th>Online %</th><th>Screen %</th><th>Avg RTT</th><th>Linked</th></tr>
+              </thead>
+              <tbody>
+                {history.map(h => (
+                  <tr key={h.id}>
+                    <td className="text-cyber-muted">{new Date(h.analyzed_at).toLocaleString()}</td>
+                    <td className="text-cyber-green">{(h.online_probability * 100).toFixed(1)}%</td>
+                    <td className="text-cyber-purple">{(h.screen_active_prob * 100).toFixed(1)}%</td>
+                    <td className="text-cyber-accent">{h.avg_rtt_ms?.toFixed(1)}ms</td>
+                    <td className="text-cyber-text">{h.linked_device_count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

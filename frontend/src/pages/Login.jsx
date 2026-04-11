@@ -45,8 +45,8 @@ export default function Login() {
         style={{ background: '#8B5CF6', filter: 'blur(80px)' }} />
 
       {/* Card */}
-      <div className="relative z-10 w-full max-w-md mx-4">
-        <div className="glass-card p-8 glow-cyan">
+      <div className="relative z-10 w-full max-w-md mx-3 sm:mx-4">
+        <div className="glass-card p-5 sm:p-8 glow-cyan">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
@@ -123,11 +123,7 @@ export default function Login() {
           </form>
 
           <div className="mt-6 pt-4 border-t border-cyber-border">
-            <p className="text-xs text-cyber-muted text-center font-mono">
-              Default: <span className="text-cyber-accent">admin</span> / <span className="text-cyber-accent">admin123</span>
-              &nbsp;|&nbsp;
-              <span className="text-cyber-purple">researcher</span> / <span className="text-cyber-purple">research123</span>
-            </p>
+  
           </div>
         </div>
       </div>

@@ -67,14 +67,14 @@ export default function ProbeSender() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 space-y-6 page-enter">
+    <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6 page-enter">
       <div>
         <h2 className="text-lg font-semibold text-cyber-text">Probe Sender</h2>
         <p className="text-xs text-cyber-muted font-mono">Dispatch silent probes to authorized test accounts</p>
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {[
           { label: 'Total', value: stats.total, color: 'text-cyber-accent' },
           { label: 'Pending', value: stats.pending, color: 'text-cyber-yellow' },
@@ -90,7 +90,7 @@ export default function ProbeSender() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Send form */}
-        <div className="glass-card p-6">
+        <div className="glass-card p-4 md:p-6">
           <h3 className="text-sm font-semibold text-cyber-text mb-4 flex items-center gap-2">
             <Radio size={14} className="text-cyber-accent" /> Dispatch Probe
           </h3>
@@ -153,10 +153,10 @@ export default function ProbeSender() {
         </div>
 
         {/* Probes table */}
-        <div className="lg:col-span-2 glass-card p-5">
+        <div className="lg:col-span-2 glass-card p-4 md:p-5">
           <h3 className="text-sm font-semibold text-cyber-text mb-4">Probe Log</h3>
           <div className="overflow-x-auto">
-            <table className="cyber-table">
+            <table className="cyber-table min-w-[640px]">
               <thead>
                 <tr>
                   <th>Probe ID</th>
@@ -185,8 +185,8 @@ export default function ProbeSender() {
               </tbody>
             </table>
           </div>
-          <div className="flex justify-between items-center mt-3 text-xs font-mono text-cyber-muted">
-            <span>Showing {probes.length} of {total} probes</span>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mt-3 text-xs font-mono text-cyber-muted">
+            <span className="break-words">Showing {probes.length} of {total} probes</span>
             <div className="flex gap-2">
               <button disabled={page === 1} onClick={() => { setPage(p=>p-1); loadProbes(page-1) }}
                 className="btn-cyber py-1 px-3 text-xs disabled:opacity-30">PREV</button>
