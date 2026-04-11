@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from functools import wraps
 from app import db
 from app.models import TestDevice, User
@@ -11,8 +11,8 @@ def admin_required(fn):
     @wraps(fn)
     @jwt_required()
     def wrapper(*args, **kwargs):
-        identity = get_jwt_identity()
-        if identity.get("role") != "admin":
+        claims = get_jwt()
+        if claims.get("role") != "admin":
             return jsonify({"error": "Admin access required"}), 403
         return fn(*args, **kwargs)
     return wrapper
@@ -28,7 +28,7 @@ def list_devices():
 @devices_bp.route("", methods=["POST"])
 @admin_required
 def add_device():
-    identity = get_jwt_identity()
+    user_id = get_jwt_identity()
     data = request.get_json()
     phone = data.get("phone_number", "").strip()
     label = data.get("label", "")
@@ -44,7 +44,7 @@ def add_device():
         phone_number=phone,
         label=label,
         consent_verified=consent,
-        added_by=identity["id"],
+        added_by=user_id,
     )
     db.session.add(device)
     db.session.commit()

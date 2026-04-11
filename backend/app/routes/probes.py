@@ -30,7 +30,7 @@ def list_probes():
 @probes_bp.route("/send", methods=["POST"])
 @jwt_required()
 def send_probe():
-    identity = get_jwt_identity()
+    user_id = get_jwt_identity()
     data = request.get_json()
     device_id = data.get("device_id")
     probe_type = data.get("probe_type", "silent")
@@ -45,7 +45,7 @@ def send_probe():
         device_id=device_id,
         probe_type=probe_type,
         status="pending",
-        researcher_id=identity["id"],
+        researcher_id=user_id,
         sent_at=datetime.now(timezone.utc),
     )
     db.session.add(probe)

@@ -9,6 +9,8 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-change-me")
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-jwt-secret-change-me")
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=8)
+    AUTH_ALLOW_SEED = os.getenv("AUTH_ALLOW_SEED", "false").lower() in {"1", "true", "yes"}
+    PREDEFINED_USERS = os.getenv("PREDEFINED_USERS", "")
 
     # Database: prefer DATABASE_URL, fallback to local sqlite for quick dev startup
     SQLALCHEMY_DATABASE_URI = os.getenv(
